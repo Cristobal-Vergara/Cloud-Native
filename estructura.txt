@@ -1,0 +1,704 @@
+.
+├── AndesStay Backend
+│   ├── Dockerfile
+│   ├── andesstay-before-flyway-20261017-192754.sql
+│   ├── docker-compose.yml
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   ├── pom.xml
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   ├── com
+│   │   │   │   │   └── example
+│   │   │   │   │       └── AndesStay
+│   │   │   │   │           ├── AndesStayApplication.java
+│   │   │   │   │           ├── config
+│   │   │   │   │           │   ├── ClockConfig.java
+│   │   │   │   │           │   ├── MessagingConfig.java
+│   │   │   │   │           │   ├── RabbitDeliveryConfig.java
+│   │   │   │   │           │   ├── RabbitDemoConfig.java
+│   │   │   │   │           │   ├── RabbitMQConfig.java
+│   │   │   │   │           │   └── SecurityConfig.java
+│   │   │   │   │           ├── controller
+│   │   │   │   │           │   ├── AccountController.java
+│   │   │   │   │           │   ├── AuditController.java
+│   │   │   │   │           │   ├── AuditExceptionHandler.java
+│   │   │   │   │           │   ├── ListenerControlController.java
+│   │   │   │   │           │   ├── ListenerControlExceptionHandler.java
+│   │   │   │   │           │   ├── MessagingController.java
+│   │   │   │   │           │   ├── ReportController.java
+│   │   │   │   │           │   ├── ReservationController.java
+│   │   │   │   │           │   ├── ReservationExceptionHandler.java
+│   │   │   │   │           │   ├── ReservationNotificationController.java
+│   │   │   │   │           │   ├── UnitController.java
+│   │   │   │   │           │   ├── UserProfileController.java
+│   │   │   │   │           │   └── UserProfileExceptionHandler.java
+│   │   │   │   │           ├── dto
+│   │   │   │   │           │   ├── ListenerStatusResponse.java
+│   │   │   │   │           │   ├── MessagingStatusResponse.java
+│   │   │   │   │           │   ├── PageResponse.java
+│   │   │   │   │           │   └── ReservationNotificationResponse.java
+│   │   │   │   │           ├── entity
+│   │   │   │   │           │   ├── AuditEvent.java
+│   │   │   │   │           │   ├── ConsumedEvent.java
+│   │   │   │   │           │   ├── OutboxEvent.java
+│   │   │   │   │           │   ├── Reservation.java
+│   │   │   │   │           │   ├── ReservationNotification.java
+│   │   │   │   │           │   ├── Unit.java
+│   │   │   │   │           │   └── UserProfile.java
+│   │   │   │   │           ├── messaging
+│   │   │   │   │           │   ├── RabbitListenerIds.java
+│   │   │   │   │           │   ├── delivery
+│   │   │   │   │           │   │   ├── RabbitDeliveryFailureClassifier.java
+│   │   │   │   │           │   │   └── RabbitDeliveryHandler.java
+│   │   │   │   │           │   ├── demo
+│   │   │   │   │           │   │   └── DeliveryDemoConsumer.java
+│   │   │   │   │           │   └── notifications
+│   │   │   │   │           │       ├── GuestNotificationConsumer.java
+│   │   │   │   │           │       └── ReceptionNotificationConsumer.java
+│   │   │   │   │           ├── repository
+│   │   │   │   │           │   ├── AuditEventRepository.java
+│   │   │   │   │           │   ├── OutboxRepository.java
+│   │   │   │   │           │   ├── ReservationNotificationRepository.java
+│   │   │   │   │           │   ├── ReservationRepository.java
+│   │   │   │   │           │   ├── UnitRepository.java
+│   │   │   │   │           │   └── UserProfileRepository.java
+│   │   │   │   │           └── service
+│   │   │   │   │               ├── AccountRoles.java
+│   │   │   │   │               ├── AuditService.java
+│   │   │   │   │               ├── BrokerGateway.java
+│   │   │   │   │               ├── InboxService.java
+│   │   │   │   │               ├── InvalidNotificationEventException.java
+│   │   │   │   │               ├── KafkaConsumer.java
+│   │   │   │   │               ├── KafkaProducer.java
+│   │   │   │   │               ├── ListenerControlService.java
+│   │   │   │   │               ├── MessagingDemoService.java
+│   │   │   │   │               ├── MessagingStatusService.java
+│   │   │   │   │               ├── OutboxDispatchService.java
+│   │   │   │   │               ├── OutboxPublisher.java
+│   │   │   │   │               ├── OutboxService.java
+│   │   │   │   │               ├── Pagination.java
+│   │   │   │   │               ├── ReportService.java
+│   │   │   │   │               ├── ReservationAccess.java
+│   │   │   │   │               ├── ReservationEventType.java
+│   │   │   │   │               ├── ReservationNotificationService.java
+│   │   │   │   │               ├── ReservationProducer.java
+│   │   │   │   │               ├── ReservationService.java
+│   │   │   │   │               ├── UnitService.java
+│   │   │   │   │               └── UserProfileService.java
+│   │   │   │   └── db
+│   │   │   │       └── migration
+│   │   │   │           └── V2__ReservationOwnershipAndIndexes.java
+│   │   │   └── resources
+│   │   │       ├── application-local.properties
+│   │   │       ├── application.properties
+│   │   │       ├── db
+│   │   │       │   ├── local
+│   │   │       │   │   └── R__demo_units.sql
+│   │   │       │   └── migration
+│   │   │       │       ├── V1__legacy_schema.sql
+│   │   │       │       ├── V3__outbox_and_guest_assignment.sql
+│   │   │       │       ├── V4__audit_text_lengths.sql
+│   │   │       │       ├── V5__user_profiles.sql
+│   │   │       │       └── V6__reservation_notifications.sql
+│   │   │       └── rabbit-delivery.properties
+│   │   └── test
+│   │       ├── java
+│   │       │   └── com
+│   │       │       └── example
+│   │       │           └── AndesStay
+│   │       │               ├── AndesStayApplicationTests.java
+│   │       │               ├── config
+│   │       │               │   ├── ApiVersioningTests.java
+│   │       │               │   ├── AuditSecurityTests.java
+│   │       │               │   ├── CatalogSecurityTests.java
+│   │       │               │   ├── ListenerControlSecurityTests.java
+│   │       │               │   ├── MessagingSecurityTests.java
+│   │       │               │   ├── NotificationSecurityTests.java
+│   │       │               │   ├── PublicGuestSecurityTests.java
+│   │       │               │   ├── RabbitTopologyContractTests.java
+│   │       │               │   ├── ReservationSecurityTests.java
+│   │       │               │   └── UserProfileSecurityTests.java
+│   │       │               ├── messaging
+│   │       │               │   └── delivery
+│   │       │               │       └── RabbitDeliveryHandlerTests.java
+│   │       │               └── service
+│   │       │                   ├── AuditFilteringIntegrationTests.java
+│   │       │                   ├── BrokerGatewayTests.java
+│   │       │                   ├── ListenerControlBrokerTests.java
+│   │       │                   ├── ListenerControlServiceTests.java
+│   │       │                   ├── MessagingStatusTests.java
+│   │       │                   ├── MySqlMigrationTests.java
+│   │       │                   ├── RabbitClusterRecoveryTests.java
+│   │       │                   ├── RabbitThroughputBrokerTests.java
+│   │       │                   ├── RealBrokerIntegrationTests.java
+│   │       │                   ├── ReservationAvailabilityIntegrationTests.java
+│   │       │                   ├── ReservationNotificationIntegrationTests.java
+│   │       │                   ├── ReservationServiceSecurityTests.java
+│   │       │                   ├── UserProfileIntegrationTests.java
+│   │       │                   └── WorkflowIntegrationTests.java
+│   │       └── resources
+│   │           └── application.properties
+│   └── target
+│       ├── classes
+│       │   ├── application-local.properties
+│       │   ├── application.properties
+│       │   ├── com
+│       │   │   └── example
+│       │   │       └── AndesStay
+│       │   │           ├── AndesStayApplication.class
+│       │   │           ├── config
+│       │   │           │   ├── ClockConfig.class
+│       │   │           │   ├── MessagingConfig.class
+│       │   │           │   ├── RabbitDeliveryConfig.class
+│       │   │           │   ├── RabbitDemoConfig.class
+│       │   │           │   ├── RabbitMQConfig.class
+│       │   │           │   └── SecurityConfig.class
+│       │   │           ├── controller
+│       │   │           │   ├── AccountController.class
+│       │   │           │   ├── AuditController.class
+│       │   │           │   ├── AuditExceptionHandler.class
+│       │   │           │   ├── ListenerControlController.class
+│       │   │           │   ├── ListenerControlExceptionHandler.class
+│       │   │           │   ├── MessagingController.class
+│       │   │           │   ├── ReportController.class
+│       │   │           │   ├── ReservationController.class
+│       │   │           │   ├── ReservationExceptionHandler.class
+│       │   │           │   ├── ReservationNotificationController.class
+│       │   │           │   ├── UnitController.class
+│       │   │           │   ├── UserProfileController$Registration.class
+│       │   │           │   ├── UserProfileController.class
+│       │   │           │   └── UserProfileExceptionHandler.class
+│       │   │           ├── dto
+│       │   │           │   ├── ListenerStatusResponse$State.class
+│       │   │           │   ├── ListenerStatusResponse.class
+│       │   │           │   ├── MessagingStatusResponse.class
+│       │   │           │   ├── PageResponse.class
+│       │   │           │   └── ReservationNotificationResponse.class
+│       │   │           ├── entity
+│       │   │           │   ├── AuditEvent.class
+│       │   │           │   ├── ConsumedEvent$Key.class
+│       │   │           │   ├── ConsumedEvent.class
+│       │   │           │   ├── OutboxEvent.class
+│       │   │           │   ├── Reservation.class
+│       │   │           │   ├── ReservationNotification.class
+│       │   │           │   ├── Unit.class
+│       │   │           │   └── UserProfile.class
+│       │   │           ├── messaging
+│       │   │           │   ├── RabbitListenerIds.class
+│       │   │           │   ├── delivery
+│       │   │           │   │   ├── RabbitDeliveryFailureClassifier.class
+│       │   │           │   │   └── RabbitDeliveryHandler.class
+│       │   │           │   ├── demo
+│       │   │           │   │   └── DeliveryDemoConsumer.class
+│       │   │           │   └── notifications
+│       │   │           │       ├── GuestNotificationConsumer.class
+│       │   │           │       └── ReceptionNotificationConsumer.class
+│       │   │           ├── repository
+│       │   │           │   ├── AuditEventRepository.class
+│       │   │           │   ├── OutboxRepository.class
+│       │   │           │   ├── ReservationNotificationRepository.class
+│       │   │           │   ├── ReservationRepository$StatusCount.class
+│       │   │           │   ├── ReservationRepository$UnitCount.class
+│       │   │           │   ├── ReservationRepository.class
+│       │   │           │   ├── UnitRepository.class
+│       │   │           │   └── UserProfileRepository.class
+│       │   │           └── service
+│       │   │               ├── AccountRoles.class
+│       │   │               ├── AuditService.class
+│       │   │               ├── BrokerGateway.class
+│       │   │               ├── InboxService.class
+│       │   │               ├── InvalidNotificationEventException.class
+│       │   │               ├── KafkaConsumer.class
+│       │   │               ├── KafkaProducer.class
+│       │   │               ├── ListenerControlService$Control.class
+│       │   │               ├── ListenerControlService.class
+│       │   │               ├── MessagingDemoService.class
+│       │   │               ├── MessagingStatusService.class
+│       │   │               ├── OutboxDispatchService.class
+│       │   │               ├── OutboxPublisher.class
+│       │   │               ├── OutboxService.class
+│       │   │               ├── Pagination.class
+│       │   │               ├── ReportService.class
+│       │   │               ├── ReservationAccess.class
+│       │   │               ├── ReservationEventType.class
+│       │   │               ├── ReservationNotificationService.class
+│       │   │               ├── ReservationProducer.class
+│       │   │               ├── ReservationService.class
+│       │   │               ├── UnitService.class
+│       │   │               ├── UserProfileService$Profile.class
+│       │   │               └── UserProfileService.class
+│       │   ├── db
+│       │   │   ├── local
+│       │   │   │   └── R__demo_units.sql
+│       │   │   └── migration
+│       │   │       ├── V1__legacy_schema.sql
+│       │   │       ├── V2__ReservationOwnershipAndIndexes.class
+│       │   │       ├── V3__outbox_and_guest_assignment.sql
+│       │   │       ├── V4__audit_text_lengths.sql
+│       │   │       ├── V5__user_profiles.sql
+│       │   │       └── V6__reservation_notifications.sql
+│       │   ├── rabbit-delivery.properties
+│       │   └── rabbit-topology.properties
+│       ├── generated-sources
+│       │   └── annotations
+│       ├── generated-test-sources
+│       │   └── test-annotations
+│       ├── maven-status
+│       │   └── maven-compiler-plugin
+│       │       ├── compile
+│       │       │   └── default-compile
+│       │       │       ├── createdFiles.lst
+│       │       │       └── inputFiles.lst
+│       │       └── testCompile
+│       │           └── default-testCompile
+│       │               ├── createdFiles.lst
+│       │               └── inputFiles.lst
+│       ├── surefire-reports
+│       │   ├── TEST-com.example.AndesStay.messaging.delivery.RabbitDeliveryHandlerTests.xml
+│       │   ├── TEST-com.example.AndesStay.service.ReservationNotificationIntegrationTests.xml
+│       │   ├── com.example.AndesStay.messaging.delivery.RabbitDeliveryHandlerTests.txt
+│       │   └── com.example.AndesStay.service.ReservationNotificationIntegrationTests.txt
+│       └── test-classes
+│           ├── application.properties
+│           └── com
+│               └── example
+│                   └── AndesStay
+│                       ├── AndesStayApplicationTests.class
+│                       ├── config
+│                       │   ├── ApiVersioningTests$TestClock.class
+│                       │   ├── ApiVersioningTests.class
+│                       │   ├── AuditSecurityTests.class
+│                       │   ├── CatalogSecurityTests.class
+│                       │   ├── ListenerControlSecurityTests.class
+│                       │   ├── MessagingSecurityTests.class
+│                       │   ├── NotificationSecurityTests.class
+│                       │   ├── PublicGuestSecurityTests.class
+│                       │   ├── RabbitTopologyContractTests.class
+│                       │   ├── ReservationSecurityTests.class
+│                       │   └── UserProfileSecurityTests.class
+│                       ├── messaging
+│                       │   └── delivery
+│                       │       └── RabbitDeliveryHandlerTests.class
+│                       └── service
+│                           ├── AuditFilteringIntegrationTests.class
+│                           ├── BrokerGatewayTests.class
+│                           ├── ListenerControlBrokerTests.class
+│                           ├── ListenerControlServiceTests.class
+│                           ├── MessagingStatusTests.class
+│                           ├── MySqlMigrationTests.class
+│                           ├── RabbitClusterRecoveryTests$TestClock.class
+│                           ├── RabbitClusterRecoveryTests.class
+│                           ├── RabbitThroughputBrokerTests$Batch.class
+│                           ├── RabbitThroughputBrokerTests.class
+│                           ├── RealBrokerIntegrationTests.class
+│                           ├── ReservationAvailabilityIntegrationTests.class
+│                           ├── ReservationNotificationIntegrationTests.class
+│                           ├── ReservationServiceSecurityTests.class
+│                           ├── UserProfileIntegrationTests.class
+│                           └── WorkflowIntegrationTests.class
+├── AndesStay Frontend
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── nginx.conf
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   ├── andes-landscape.svg
+│   │   └── favicon.svg
+│   ├── src
+│   │   ├── App.jsx
+│   │   ├── api.js
+│   │   ├── auth
+│   │   │   └── AccountContext.js
+│   │   ├── authConfig.js
+│   │   ├── components
+│   │   │   ├── AccountProvider.jsx
+│   │   │   ├── AuthLayout.jsx
+│   │   │   ├── Brand.jsx
+│   │   │   ├── EmptyState.jsx
+│   │   │   ├── Icon.jsx
+│   │   │   ├── KpiCards.jsx
+│   │   │   ├── ListenerControls.jsx
+│   │   │   ├── MessagingHealth.jsx
+│   │   │   ├── MicrosoftButton.jsx
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── PageHeader.jsx
+│   │   │   ├── Pagination.jsx
+│   │   │   ├── ReservationNotifications.jsx
+│   │   │   └── StatusBadge.jsx
+│   │   ├── format.js
+│   │   ├── hooks
+│   │   │   ├── useApi.js
+│   │   │   └── useResource.js
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   ├── pages
+│   │   │   ├── Audit.jsx
+│   │   │   ├── Catalog.jsx
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   ├── Reports.jsx
+│   │   │   └── Reservations.jsx
+│   │   └── test
+│   │       ├── api.test.js
+│   │       ├── listener-controls.test.jsx
+│   │       ├── messaging.test.jsx
+│   │       ├── navigation.test.jsx
+│   │       ├── notifications.test.jsx
+│   │       ├── pages.test.jsx
+│   │       ├── public-access.test.jsx
+│   │       ├── registration.test.jsx
+│   │       ├── role-routes.test.jsx
+│   │       └── setup.js
+│   ├── vite.config.js
+│   └── vitest.config.js
+├── AndesStayBFF
+│   ├── Dockerfile
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   ├── pom.xml
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── com
+│   │   │   │       └── example
+│   │   │   │           └── andesstay
+│   │   │   │               └── AndesStayBFF
+│   │   │   │                   ├── AndesStayBffApplication.java
+│   │   │   │                   ├── config
+│   │   │   │                   │   ├── RestClientConfig.java
+│   │   │   │                   │   └── SecurityConfig.java
+│   │   │   │                   ├── controller
+│   │   │   │                   │   ├── BffController.java
+│   │   │   │                   │   └── BffExceptionHandler.java
+│   │   │   │                   └── service
+│   │   │   │                       └── BffReservationService.java
+│   │   │   └── resources
+│   │   │       └── application.properties
+│   │   └── test
+│   │       ├── java
+│   │       │   └── com
+│   │       │       └── example
+│   │       │           └── andesstay
+│   │       │               └── AndesStayBFF
+│   │       │                   ├── AndesStayBffApplicationTests.java
+│   │       │                   └── config
+│   │       │                       ├── ApiVersioningProxyTests.java
+│   │       │                       ├── AuditProxyTests.java
+│   │       │                       ├── CatalogProxyTests.java
+│   │       │                       ├── ListenerControlProxyTests.java
+│   │       │                       ├── MessagingProxyTests.java
+│   │       │                       ├── NotificationProxyTests.java
+│   │       │                       ├── PublicGuestProxyTests.java
+│   │       │                       ├── ReservationSecurityTests.java
+│   │       │                       └── UserProfileProxyTests.java
+│   │       └── resources
+│   │           └── application.properties
+│   └── target
+│       ├── classes
+│       │   ├── application.properties
+│       │   └── com
+│       │       └── example
+│       │           └── andesstay
+│       │               └── AndesStayBFF
+│       │                   ├── AndesStayBffApplication.class
+│       │                   ├── config
+│       │                   │   ├── RestClientConfig.class
+│       │                   │   └── SecurityConfig.class
+│       │                   ├── controller
+│       │                   │   ├── BffController.class
+│       │                   │   └── BffExceptionHandler.class
+│       │                   └── service
+│       │                       └── BffReservationService.class
+│       ├── generated-sources
+│       │   └── annotations
+│       ├── generated-test-sources
+│       │   └── test-annotations
+│       ├── maven-status
+│       │   └── maven-compiler-plugin
+│       │       ├── compile
+│       │       │   └── default-compile
+│       │       │       ├── createdFiles.lst
+│       │       │       └── inputFiles.lst
+│       │       └── testCompile
+│       │           └── default-testCompile
+│       │               ├── createdFiles.lst
+│       │               └── inputFiles.lst
+│       ├── surefire-reports
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.AndesStayBffApplicationTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.ApiVersioningProxyTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.AuditProxyTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.CatalogProxyTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.ListenerControlProxyTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.MessagingProxyTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.NotificationProxyTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.PublicGuestProxyTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.ReservationSecurityTests.xml
+│       │   ├── TEST-com.example.andesstay.AndesStayBFF.config.UserProfileProxyTests.xml
+│       │   ├── com.example.andesstay.AndesStayBFF.AndesStayBffApplicationTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.ApiVersioningProxyTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.AuditProxyTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.CatalogProxyTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.ListenerControlProxyTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.MessagingProxyTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.NotificationProxyTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.PublicGuestProxyTests.txt
+│       │   ├── com.example.andesstay.AndesStayBFF.config.ReservationSecurityTests.txt
+│       │   └── com.example.andesstay.AndesStayBFF.config.UserProfileProxyTests.txt
+│       └── test-classes
+│           ├── application.properties
+│           └── com
+│               └── example
+│                   └── andesstay
+│                       └── AndesStayBFF
+│                           ├── AndesStayBffApplicationTests.class
+│                           └── config
+│                               ├── ApiVersioningProxyTests.class
+│                               ├── AuditProxyTests$ClientConfiguration.class
+│                               ├── AuditProxyTests$ClientFixture.class
+│                               ├── AuditProxyTests.class
+│                               ├── CatalogProxyTests.class
+│                               ├── ListenerControlProxyTests.class
+│                               ├── MessagingProxyTests.class
+│                               ├── NotificationProxyTests.class
+│                               ├── PublicGuestProxyTests.class
+│                               ├── ReservationSecurityTests.class
+│                               └── UserProfileProxyTests.class
+├── AndesStayKafkaAdmin
+│   ├── Dockerfile
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   ├── pom.xml
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── example
+│       │   │           └── AndesStayKafkaAdmin
+│       │   │               ├── AndesStayKafkaAdminApplication.java
+│       │   │               ├── config
+│       │   │               │   ├── KafkaAdminConfig.java
+│       │   │               │   └── SecurityConfig.java
+│       │   │               └── controller
+│       │   │                   └── KafkaAdminController.java
+│       │   └── resources
+│       │       └── application.properties
+│       └── test
+│           ├── java
+│           │   └── com
+│           │       └── example
+│           │           └── AndesStayKafkaAdmin
+│           │               ├── AndesStayKafkaAdminApplicationTests.java
+│           │               └── KafkaApiVersioningTests.java
+│           └── resources
+│               └── application.properties
+├── AndesStayRabbitAdmin
+│   ├── Dockerfile
+│   ├── mvnw
+│   ├── mvnw.cmd
+│   ├── pom.xml
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   └── com
+│   │   │   │       └── example
+│   │   │   │           └── AndesStayRabbitAdmin
+│   │   │   │               ├── AndesStayRabbitAdminApplication.java
+│   │   │   │               ├── client
+│   │   │   │               │   └── RabbitManagementClient.java
+│   │   │   │               ├── config
+│   │   │   │               │   ├── RabbitManagementConfig.java
+│   │   │   │               │   └── SecurityConfig.java
+│   │   │   │               ├── controller
+│   │   │   │               │   ├── RabbitAdminController.java
+│   │   │   │               │   └── RabbitAdminExceptionHandler.java
+│   │   │   │               ├── dto
+│   │   │   │               │   ├── RabbitRequests.java
+│   │   │   │               │   └── RabbitResponses.java
+│   │   │   │               └── service
+│   │   │   │                   ├── RabbitAdminException.java
+│   │   │   │                   ├── RabbitAdminService.java
+│   │   │   │                   └── RabbitResourceScope.java
+│   │   │   └── resources
+│   │   │       └── application.properties
+│   │   └── test
+│   │       ├── java
+│   │       │   └── com
+│   │       │       └── example
+│   │       │           └── AndesStayRabbitAdmin
+│   │       │               ├── AndesStayRabbitAdminApplicationTests.java
+│   │       │               ├── RabbitAdminApiTests.java
+│   │       │               ├── RabbitAdminServiceTests.java
+│   │       │               ├── RabbitManagementClientTests.java
+│   │       │               ├── RabbitTopologyControllerTests.java
+│   │       │               └── RealRabbitAdminIntegrationTests.java
+│   │       └── resources
+│   │           └── application.properties
+│   └── target
+│       ├── classes
+│       │   ├── application.properties
+│       │   ├── com
+│       │   │   └── example
+│       │   │       └── AndesStayRabbitAdmin
+│       │   │           ├── AndesStayRabbitAdminApplication.class
+│       │   │           ├── client
+│       │   │           │   ├── RabbitManagementClient$1.class
+│       │   │           │   ├── RabbitManagementClient$2.class
+│       │   │           │   ├── RabbitManagementClient$3.class
+│       │   │           │   ├── RabbitManagementClient$4.class
+│       │   │           │   ├── RabbitManagementClient$BrokerBinding.class
+│       │   │           │   ├── RabbitManagementClient$BrokerExchange.class
+│       │   │           │   ├── RabbitManagementClient$BrokerPage.class
+│       │   │           │   ├── RabbitManagementClient$BrokerPolicy.class
+│       │   │           │   ├── RabbitManagementClient$BrokerQueue.class
+│       │   │           │   └── RabbitManagementClient.class
+│       │   │           ├── config
+│       │   │           │   ├── RabbitManagementConfig.class
+│       │   │           │   └── SecurityConfig.class
+│       │   │           ├── controller
+│       │   │           │   ├── RabbitAdminController.class
+│       │   │           │   └── RabbitAdminExceptionHandler.class
+│       │   │           ├── dto
+│       │   │           │   ├── RabbitRequests$BindingCreate.class
+│       │   │           │   ├── RabbitRequests$BindingSettings.class
+│       │   │           │   ├── RabbitRequests$ExchangeCreate.class
+│       │   │           │   ├── RabbitRequests$ExchangeSettings.class
+│       │   │           │   ├── RabbitRequests$QueueCreate.class
+│       │   │           │   ├── RabbitRequests$QueueSettings.class
+│       │   │           │   ├── RabbitRequests.class
+│       │   │           │   ├── RabbitResponses$BindingView.class
+│       │   │           │   ├── RabbitResponses$Error.class
+│       │   │           │   ├── RabbitResponses$ExchangeView.class
+│       │   │           │   ├── RabbitResponses$FieldError.class
+│       │   │           │   ├── RabbitResponses$Page.class
+│       │   │           │   ├── RabbitResponses$QueueView.class
+│       │   │           │   ├── RabbitResponses$Status.class
+│       │   │           │   └── RabbitResponses.class
+│       │   │           └── service
+│       │   │               ├── RabbitAdminException.class
+│       │   │               ├── RabbitAdminService.class
+│       │   │               └── RabbitResourceScope.class
+│       │   └── rabbit-topology.properties
+│       ├── generated-sources
+│       │   └── annotations
+│       ├── generated-test-sources
+│       │   └── test-annotations
+│       ├── maven-status
+│       │   └── maven-compiler-plugin
+│       │       ├── compile
+│       │       │   └── default-compile
+│       │       │       ├── createdFiles.lst
+│       │       │       └── inputFiles.lst
+│       │       └── testCompile
+│       │           └── default-testCompile
+│       │               ├── createdFiles.lst
+│       │               └── inputFiles.lst
+│       ├── surefire-reports
+│       │   ├── TEST-com.example.AndesStayRabbitAdmin.AndesStayRabbitAdminApplicationTests.xml
+│       │   ├── TEST-com.example.AndesStayRabbitAdmin.RabbitAdminApiTests.xml
+│       │   ├── TEST-com.example.AndesStayRabbitAdmin.RabbitAdminServiceTests.xml
+│       │   ├── TEST-com.example.AndesStayRabbitAdmin.RabbitManagementClientTests.xml
+│       │   ├── TEST-com.example.AndesStayRabbitAdmin.RabbitTopologyControllerTests.xml
+│       │   ├── TEST-com.example.AndesStayRabbitAdmin.RealRabbitAdminIntegrationTests.xml
+│       │   ├── com.example.AndesStayRabbitAdmin.AndesStayRabbitAdminApplicationTests.txt
+│       │   ├── com.example.AndesStayRabbitAdmin.RabbitAdminApiTests.txt
+│       │   ├── com.example.AndesStayRabbitAdmin.RabbitAdminServiceTests.txt
+│       │   ├── com.example.AndesStayRabbitAdmin.RabbitManagementClientTests.txt
+│       │   ├── com.example.AndesStayRabbitAdmin.RabbitTopologyControllerTests.txt
+│       │   └── com.example.AndesStayRabbitAdmin.RealRabbitAdminIntegrationTests.txt
+│       └── test-classes
+│           ├── application.properties
+│           └── com
+│               └── example
+│                   └── AndesStayRabbitAdmin
+│                       ├── AndesStayRabbitAdminApplicationTests.class
+│                       ├── RabbitAdminApiTests.class
+│                       ├── RabbitAdminServiceTests.class
+│                       ├── RabbitManagementClientTests.class
+│                       ├── RabbitTopologyControllerTests.class
+│                       └── RealRabbitAdminIntegrationTests.class
+├── README.md
+├── TESTS.md
+├── config
+│   └── rabbit-topology.properties
+├── docker
+│   ├── docker-compose.yml
+│   └── tests
+│       ├── compose.env
+│       ├── gateway
+│       │   ├── bff-stub.mjs
+│       │   ├── docker-compose.yml
+│       │   └── index.html
+│       └── rabbit-cluster
+│           ├── docker-compose.yml
+│           └── rabbitmq.conf
+├── docs
+│   ├── 01-permisos-reservas.md
+│   ├── 02-disponibilidad-reservas.md
+│   ├── 03-filtros-auditoria.md
+│   ├── 04-entorno-y-migraciones.md
+│   ├── 05-eventos-confiables.md
+│   ├── 06-catalogo-reportes-interfaz.md
+│   ├── 07-diseno-frontend.md
+│   ├── 08-registro-con-microsoft.md
+│   ├── 09-registro-publico.md
+│   ├── 10-rabbitmq-reservas.md
+│   ├── 11-rabbitmq-dlq-retencion.md
+│   ├── 12-topologia-rabbitmq-centralizada.md
+│   ├── 13-consumidores-por-dominio.md
+│   ├── 14-ack-manual-y-clasificacion-de-errores.md
+│   ├── 15-rabbit-admin-crud.md
+│   ├── 16-control-consumidores.md
+│   ├── 17-rendimiento-rabbitmq.md
+│   ├── 18-api-versionada.md
+│   ├── 19-limites-api-local.md
+│   ├── 20-cluster-rabbitmq-recuperacion.md
+│   ├── 21-evidencias-ep3.md
+│   └── images
+│       └── frontend
+│           ├── catalogo-mobile-prueba.png
+│           ├── entrega-avisos-movil-prueba.png
+│           ├── entrega-avisos-prueba.png
+│           ├── espacio-huesped-prueba.png
+│           ├── login-desktop.png
+│           ├── login-mobile.png
+│           ├── registro-con-correo.png
+│           ├── registro-desktop.png
+│           ├── registro-mobile.png
+│           ├── registro-publico-huesped-prueba.png
+│           └── registro-publico-movil-prueba.png
+├── estructura.txt
+└── scripts
+    ├── export-rabbit-topology.cmd
+    ├── export-rabbit-topology.ps1
+    ├── invoke-rabbit-cluster-tests.ps1
+    ├── setup-local.cmd
+    ├── setup-local.ps1
+    ├── start-local.cmd
+    ├── start-local.ps1
+    ├── stop-local.cmd
+    ├── stop-local.ps1
+    ├── test-api-gateway.cmd
+    ├── test-api-gateway.mjs
+    ├── test-api-gateway.ps1
+    ├── test-listener-control.cmd
+    ├── test-listener-control.ps1
+    ├── test-local.cmd
+    ├── test-local.ps1
+    ├── test-mysql.cmd
+    ├── test-mysql.ps1
+    ├── test-rabbit-admin.cmd
+    ├── test-rabbit-admin.ps1
+    ├── test-rabbit-benchmark.cmd
+    ├── test-rabbit-benchmark.ps1
+    ├── test-rabbit-cluster.cmd
+    ├── test-rabbit-cluster.mjs
+    ├── test-rabbit-cluster.ps1
+    └── test-rabbit-topology.ps1
+
+193 directories, 508 files
