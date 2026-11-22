@@ -69,10 +69,7 @@ public class ReservationService {
         Reservation saved = reservationRepository.save(reservation);
         reservationProducer.sendReservationCreated(saved);
         kafkaProducer.sendReservationEvent(
-                "Reserva creada: ID=" + saved.getId()
-                        + ", Huésped=" + saved.getGuestName() + ", Unidad=" + saved.getUnitId()
-                        + ", CheckIn=" + saved.getCheckIn() + ", CheckOut=" + saved.getCheckOut()
-                        + ", Estado=" + saved.getStatus());
+                ReservationEventType.RESERVATION_CREATED, saved);
         auditService.registerEvent("RESERVA_CREADA", saved.getId(),
                 "Se creó la reserva para el huésped " + saved.getGuestName());
         return saved;
@@ -189,6 +186,7 @@ public class ReservationService {
             default -> throw new IllegalStateException("Transición sin evento de auditoría");
         };
         reservationProducer.sendReservationStatusChanged(saved);
+        kafkaProducer.sendReservationStatusChanged(saved);
         auditService.registerEvent(action, saved.getId(),
                 "La reserva cambió de " + currentStatus + " a " + newStatus);
         return saved;

@@ -50,17 +50,7 @@ public class AuditService {
 
         AuditEvent savedEvent =
                 auditEventRepository.save(event);
-
-        String kafkaMessage =
-                "AUDITORIA: "
-                + "ID=" + savedEvent.getId()
-                + ", Acción=" + savedEvent.getAction()
-                + ", Reserva=" + savedEvent.getReservationId()
-                + ", Usuario=" + savedEvent.getUser()
-                + ", Descripción=" + savedEvent.getDescription()
-                + ", Fecha=" + savedEvent.getEventDate();
-
-        kafkaProducer.sendReservationEvent(kafkaMessage);
+        kafkaProducer.sendAuditEvent(savedEvent);
 
         return savedEvent;
     }
