@@ -1,7 +1,9 @@
+
 name: andesstay-local
 x-auth: &auth
   ENTRA_ISSUER_URI: ${ENTRA_ISSUER_URI:?Ejecuta scripts/setup-local.ps1}
   ENTRA_AUDIENCE: ${ENTRA_AUDIENCE:?Ejecuta scripts/setup-local.ps1}
+
 services:
   mysql:
     image: mysql:8.4
@@ -17,6 +19,7 @@ services:
       interval: 5s
       timeout: 3s
       retries: 30
+
   rabbitmq:
     image: rabbitmq:4.1-management
     environment:
@@ -31,6 +34,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 20
+
   rabbit-setup:
     image: rabbitmq:4.1-management
     entrypoint: ["sh", "-c"]
@@ -59,6 +63,7 @@ services:
         bind: { create_host_path: false }
     depends_on:
       rabbitmq: { condition: service_healthy }
+
   kafka:
     image: apache/kafka:3.9.1
     environment:
@@ -82,6 +87,7 @@ services:
       timeout: 10s
       retries: 25
       start_period: 20s
+
   backend:
     build: { context: "..", dockerfile: "AndesStay Backend/Dockerfile" }
     ports: ["127.0.0.1:8080:8080"]
@@ -102,6 +108,7 @@ services:
       rabbitmq: { condition: service_healthy }
       rabbit-setup: { condition: service_completed_successfully }
       kafka: { condition: service_healthy }
+
   bff:
     build: { context: "../AndesStayBFF" }
     environment:
@@ -109,6 +116,7 @@ services:
       BACKEND_URL: http://backend:8080
     depends_on:
       backend: { condition: service_healthy }
+
   frontend:
     build:
       context: "../AndesStay Frontend"
@@ -120,6 +128,7 @@ services:
     ports: ["127.0.0.1:${FRONTEND_PORT:-5173}:8080"]
     depends_on:
       bff: { condition: service_healthy }
+
   rabbit-admin:
     profiles: [operations]
     build: { context: "..", dockerfile: "AndesStayRabbitAdmin/Dockerfile" }
@@ -131,6 +140,7 @@ services:
     ports: ["127.0.0.1:8091:8091"]
     depends_on:
       rabbitmq: { condition: service_healthy }
+
   kafka-admin:
     profiles: [operations]
     build: { context: "../AndesStayKafkaAdmin" }
@@ -140,7 +150,26 @@ services:
     ports: ["127.0.0.1:8092:8092"]
     depends_on:
       kafka: { condition: service_healthy }
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:v0.7.2
+    profiles: [operations]
+    environment:
+      DYNAMIC_CONFIG_ENABLED: "false"
+      KAFKA_CLUSTERS_0_NAME: andesstay-local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+    ports:
+      - "127.0.0.1:8083:8080"
+    networks:
+      - default
+      - andesstaybackend
+
 volumes:
   mysql_data:
   rabbit_data:
   kafka_data:
+
+networks:
+  andesstaybackend:
+    external: true
+    name: andesstaybackend_default
